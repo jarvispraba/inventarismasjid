@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Inventaris Masjid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-green-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-2">🕌 Sistem Inventaris Masjid</h1>
+                <p class="text-xl">Pengelolaan Barang Masjid</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center space-x-4 py-4">
+                <button onclick="showSection('dashboard')" class="nav-btn px-6 py-3 text-lg font-semibold rounded-lg bg-green-600 text-white">
+                    📊 Dashboard
+                </button>
+                <button onclick="showSection('tambah')" class="nav-btn px-6 py-3 text-lg font-semibold rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">
+                    ➕ Tambah Barang
+                </button>
+                <button onclick="showSection('data')" class="nav-btn px-6 py-3 text-lg font-semibold rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">
+                    📋 Data Inventaris
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-lg mb-2">Total Barang</p>
+                            <p class="text-4xl font-bold text-gray-800" id="totalBarang">0</p>
+                        </div>
+                        <div class="text-5xl">📦</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-lg mb-2">Kondisi Baik</p>
+                            <p class="text-4xl font-bold text-green-600" id="kondisiBaik">0</p>
+                        </div>
+                        <div class="text-5xl">✅</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-yellow-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-lg mb-2">Perlu Perbaikan</p>
+                            <p class="text-4xl font-bold text-yellow-600" id="perluPerbaikan">0</p>
+                        </div>
+                        <div class="text-5xl">⚠️</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-red-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-lg mb-2">Barang Rusak</p>
+                            <p class="text-4xl font-bold text-red-600" id="barangRusak">0</p>
+                        </div>
+                        <div class="text-5xl">❌</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tambah Barang Section -->
+        <section id="tambah" class="section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Tambah Barang</h2>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <form id="formTambah" class="space-y-6">
+                    <div>
+                        <label class="block text-xl font-semibold text-gray-700 mb-2">ID Barang *</label>
+                        <input type="text" id="idBarang" required 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                            placeholder="Contoh: BRG-001">
+                    </div>
+
+                    <div>
+                        <label class="block text-xl font-semibold text-gray-700 mb-2">Nama Barang *</label>
+                        <input type="text" id="namaBarang" required 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                            placeholder="Contoh: Speaker Aktif">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xl font-semibold text-gray-700 mb-2">Kategori *</label>
+                            <select id="kategori" required 
+                                class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                                <option value="">Pilih Kategori</option>
+                                <option value="Alat Sound">Alat Sound</option>
+                                <option value="Elektronik">Elektronik</option>
+                                <option value="Peralatan Kebersihan">Peralatan Kebersihan</option>
+                                <option value="Peralatan Ibadah">Peralatan Ibadah</option>
+                                <option value="Perabotan">Perabotan</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xl font-semibold text-gray-700 mb-2">Sub Kategori</label>
+                            <input type="text" id="subKategori" 
+                                class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                                placeholder="Contoh: Speaker">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-xl font-semibold text-gray-700 mb-2">Jumlah *</label>
+                            <input type="number" id="jumlah" required min="1" 
+                                class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                                placeholder="0">
+                        </div>
+
+                        <div>
+                            <label class="block text-xl font-semibold text-gray-700 mb-2">Kondisi *</label>
+                            <select id="kondisi" required 
+                                class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                                <option value="">Pilih Kondisi</option>
+                                <option value="Baik">Baik</option>
+                                <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+                                <option value="Rusak">Rusak</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xl font-semibold text-gray-700 mb-2">Status *</label>
+                            <select id="status" required 
+                                class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                                <option value="">Pilih Status</option>
+                                <option value="Tersedia">Tersedia</option>
+                                <option value="Perbaikan">Perbaikan</option>
+                                <option value="Tidak Ada">Tidak Ada</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xl font-semibold text-gray-700 mb-2">Lokasi *</label>
+                        <select id="lokasi" required 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                            <option value="">Pilih Lokasi</option>
+                            <option value="Ruang Utama">Ruang Utama</option>
+                            <option value="Gudang">Gudang</option>
+                            <option value="Ruang Takmir">Ruang Takmir</option>
+                            <option value="Ruang Sound">Ruang Sound</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full bg-green-600 text-white py-4 text-xl font-bold rounded-lg hover:bg-green-700 transition">
+                        💾 Simpan Data
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Data Inventaris Section -->
+        <section id="data" class="section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Data Inventaris</h2>
+            
+            <!-- Search & Filter -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <input type="text" id="searchInput" 
+                        class="px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                        placeholder="🔍 Cari nama barang...">
+                    
+                    <select id="filterKondisi" 
+                        class="px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                        <option value="">Semua Kondisi</option>
+                        <option value="Baik">Baik</option>
+                        <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+                        <option value="Rusak">Rusak</option>
+                    </select>
+
+                    <button onclick="exportToCSV()" 
+                        class="px-6 py-3 text-lg font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        📥 Export CSV
+                    </button>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="loadData()" 
+                        class="px-6 py-3 text-lg font-semibold bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        🔄 Refresh Data
+                    </button>
+                    <button onclick="openSpreadsheet()" 
+                        class="px-6 py-3 text-lg font-semibold bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                        📊 Buka Google Spreadsheet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-green-600 text-white">
+                            <tr>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">ID Barang</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Nama Barang</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Kategori</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Sub Kategori</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Jumlah</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Kondisi</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Status</th>
+                                <th class="px-4 py-4 text-left text-lg font-semibold">Lokasi</th>
+                                <th class="px-4 py-4 text-center text-lg font-semibold">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-gray-200">
+                            <tr>
+                                <td colspan="9" class="px-4 py-8 text-center text-gray-500 text-lg">
+                                    Memuat data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Edit -->
+    <div id="modalEdit" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="bg-green-600 text-white px-6 py-4 rounded-t-lg">
+                <h3 class="text-2xl font-bold">Edit Barang</h3>
+            </div>
+            <form id="formEdit" class="p-6 space-y-4">
+                <input type="hidden" id="editRowIndex">
+                
+                <div>
+                    <label class="block text-lg font-semibold text-gray-700 mb-2">ID Barang</label>
+                    <input type="text" id="editIdBarang" readonly 
+                        class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg bg-gray-100">
+                </div>
+
+                <div>
+                    <label class="block text-lg font-semibold text-gray-700 mb-2">Nama Barang *</label>
+                    <input type="text" id="editNamaBarang" required 
+                        class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Kategori *</label>
+                        <select id="editKategori" required 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                            <option value="Alat Sound">Alat Sound</option>
+                            <option value="Elektronik">Elektronik</option>
+                            <option value="Peralatan Kebersihan">Peralatan Kebersihan</option>
+                            <option value="Peralatan Ibadah">Peralatan Ibadah</option>
+                            <option value="Perabotan">Perabotan</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Sub Kategori</label>
+                        <input type="text" id="editSubKategori" 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Jumlah *</label>
+                        <input type="number" id="editJumlah" required min="1" 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Kondisi *</label>
+                        <select id="editKondisi" required 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                            <option value="Baik">Baik</option>
+                            <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+                            <option value="Rusak">Rusak</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Status *</label>
+                        <select id="editStatus" required 
+                            class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                            <option value="Tersedia">Tersedia</option>
+                            <option value="Perbaikan">Perbaikan</option>
+                            <option value="Tidak Ada">Tidak Ada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-lg font-semibold text-gray-700 mb-2">Lokasi *</label>
+                    <select id="editLokasi" required 
+                        class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none">
+                        <option value="Ruang Utama">Ruang Utama</option>
+                        <option value="Gudang">Gudang</option>
+                        <option value="Ruang Takmir">Ruang Takmir</option>
+                        <option value="Ruang Sound">Ruang Sound</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button type="submit" 
+                        class="flex-1 bg-green-600 text-white py-3 text-lg font-bold rounded-lg hover:bg-green-700">
+                        💾 Update
+                    </button>
+                    <button type="button" onclick="closeModal()" 
+                        class="flex-1 bg-gray-300 text-gray-700 py-3 text-lg font-bold rounded-lg hover:bg-gray-400">
+                        ✖ Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="hidden fixed top-20 right-6 px-6 py-4 rounded-lg shadow-xl z-50 text-white text-lg font-semibold">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
