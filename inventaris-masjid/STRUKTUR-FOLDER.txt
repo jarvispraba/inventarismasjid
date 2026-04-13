@@ -1,0 +1,49 @@
+📁 inventaris-masjid/
+│
+├── 🌐 index.html                    ← Halaman utama website (BUKA INI)
+│   └── Tampilan: Dashboard, Tambah Barang, Data Inventaris
+│
+├── ⚙️ script.js                     ← JavaScript frontend
+│   ├── Konfigurasi: API_URL, SPREADSHEET_ID
+│   └── Fungsi: Load data, Tambah, Edit, Hapus, Export CSV
+│
+├── ☁️ google-apps-script.js         ← Backend API (COPY KE APPS SCRIPT)
+│   ├── Deploy sebagai Web App
+│   ├── Konfigurasi: SPREADSHEET_ID
+│   └── Fungsi: doGet, doPost, addData, updateData, deleteData
+│
+├── 🧪 test-api.html                 ← Tool test koneksi API
+│   └── Gunakan jika ada masalah koneksi
+│
+├── 📖 README.md                     ← Dokumentasi lengkap
+│   └── Panduan setup, penggunaan, troubleshooting
+│
+└── ℹ️ INFO.txt                      ← Quick reference
+    └── Ringkasan file dan quick start
+
+═══════════════════════════════════════════════════════════════
+
+🎯 CARA PAKAI:
+
+1. Baca: README.md (dokumentasi lengkap)
+2. Setup: Google Spreadsheet + Apps Script
+3. Edit: script.js (isi API_URL dan SPREADSHEET_ID)
+4. Buka: index.html di browser
+5. Test: test-api.html jika ada masalah
+
+═══════════════════════════════════════════════════════════════
+
+📊 ALUR DATA:
+
+Website (index.html)
+    ↓
+JavaScript (script.js)
+    ↓
+Google Apps Script (google-apps-script.js)
+    ↓
+Google Spreadsheet (Database)
+
+═══════════════════════════════════════════════════════════════
+
+✅ STATUS: Production Ready
+📦 Total File: 6 file (clean & organized)

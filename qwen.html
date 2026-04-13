@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio Industrial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#5C6F2B',
+            secondary: '#DE802B',
+            neutral: '#D8C9A7',
+            light: '#EEEEEE',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-light text-gray-800 font-sans">
+
+  <!-- Hero Section -->
+  <header class="bg-primary text-light py-20 px-6 text-center">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4">Nama Anda</h1>
+    <p class="text-xl md:text-2xl max-w-2xl mx-auto opacity-90">Industrial Designer & Builder of Functional Systems</p>
+    <a href="#projects" class="mt-8 inline-block bg-secondary text-light px-6 py-3 rounded-md font-semibold hover:bg-orange-700 transition">Lihat Karya</a>
+  </header>
+
+  <!-- About Section -->
+  <section class="py-16 px-6 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-primary">Tentang Saya</h2>
+    <div class="flex flex-col md:flex-row gap-8 items-center">
+      <div class="flex-1">
+        <p class="text-gray-700 leading-relaxed">
+          Saya adalah seorang profesional yang berfokus pada solusi berbasis industri—menggabungkan kekuatan desain, teknologi, dan materialitas. 
+          Dengan latar belakang dalam rekayasa dan estetika industrial, saya menciptakan sistem yang tidak hanya berfungsi, tetapi juga tahan lama.
+        </p>
+      </div>
+      <div class="flex-1 bg-neutral h-48 rounded-lg shadow-inner"></div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="bg-neutral py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12 text-primary">Proyek Terpilih</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project Card 1 -->
+        <div class="bg-white p-6 shadow-md rounded-lg">
+          <div class="h-40 bg-gray-300 mb-4 rounded"></div>
+          <h3 class="text-xl font-bold text-primary mb-2">Sistem Otomasi Pabrik</h3>
+          <p class="text-gray-700">Desain dan implementasi kontrol berbasis IoT untuk efisiensi produksi.</p>
+        </div>
+        <!-- Project Card 2 -->
+        <div class="bg-white p-6 shadow-md rounded-lg">
+          <div class="h-40 bg-gray-300 mb-4 rounded"></div>
+          <h3 class="text-xl font-bold text-primary mb-2">Modul Pendingin Industri</h3>
+          <p class="text-gray-700">Prototipe heat-exchanger dengan material ramah lingkungan.</p>
+        </div>
+        <!-- Project Card 3 -->
+        <div class="bg-white p-6 shadow-md rounded-lg">
+          <div class="h-40 bg-gray-300 mb-4 rounded"></div>
+          <h3 class="text-xl font-bold text-primary mb-2">Dashboard Monitoring Mesin</h3>
+          <p class="text-gray-700">Antarmuka real-time untuk pemeliharaan prediktif.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="py-16 px-6 bg-light">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6 text-primary">Mari Berkolaborasi</h2>
+      <p class="mb-8 text-gray-700">Buka untuk proyek baru, konsultasi, atau sekadar ngobrol tentang teknologi industri.</p>
+      <a href="mailto:you@example.com" class="inline-block bg-secondary text-light px-6 py-3 rounded-md font-semibold hover:bg-orange-700 transition">
+        <i class="fas fa-envelope mr-2"></i>Hubungi Saya
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-light py-6 text-center text-sm">
+    &copy; 2026 Nama Anda. All rights reserved.
+  </footer>
+
+</body>
+</html>
+
