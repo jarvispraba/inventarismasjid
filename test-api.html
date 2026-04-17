@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-box {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .success { border-color: #10b981; background: #d1fae5; }
+        .error { border-color: #ef4444; background: #fee2e2; }
+        .info { border-color: #3b82f6; background: #dbeafe; }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #059669; }
+        pre {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test API Connection</h1>
+    <p>Gunakan halaman ini untuk test koneksi ke Google Apps Script</p>
+
+    <div class="test-box info">
+        <h3>1. Setup API URL</h3>
+        <label>Paste Web App URL dari Google Apps Script:</label>
+        <input type="text" id="apiUrl" placeholder="https://script.google.com/macros/s/YOUR_ID/exec">
+        <button onclick="saveApiUrl()">💾 Simpan URL</button>
+    </div>
+
+    <div class="test-box">
+        <h3>2. Test GET Request (Load Data)</h3>
+        <button onclick="testGet()">▶️ Test GET</button>
+        <div id="getResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>3. Test ADD Request (Tambah Data)</h3>
+        <button onclick="testAdd()">▶️ Test ADD</button>
+        <div id="addResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>Console Log</h3>
+        <pre id="consoleLog">Belum ada log...</pre>
+    </div>
+
+    <script>
+        let API_URL = '';
+        let logs = [];
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push(`[${timestamp}] ${message}`);
+            document.getElementById('consoleLog').textContent = logs.join('\n');
+            console.log(message);
+        }
+
+        function saveApiUrl() {
+            API_URL = document.getElementById('apiUrl').value.trim();
+            if (API_URL) {
+                localStorage.setItem('test_api_url', API_URL);
+                log('✅ API URL disimpan: ' + API_URL);
+                alert('API URL disimpan!');
+            } else {
+                alert('Mohon isi API URL!');
+            }
+        }
+
+        // Load saved URL
+        window.onload = function() {
+            const saved = localStorage.getItem('test_api_url');
+            if (saved) {
+                document.getElementById('apiUrl').value = saved;
+                API_URL = saved;
+                log('📂 API URL dimuat dari storage');
+            }
+        };
+
+        async function testGet() {
+            if (!API_URL) {
+                alert('Mohon isi API URL terlebih dahulu!');
+                return;
+            }
+
+            const resultDiv = document.getElementById('getResult');
+            resultDiv.innerHTML = '<p>⏳ Loading...</p>';
+            
+            log('=== TEST GET REQUEST ===');
+            log('URL: ' + API_URL);
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
+
+                log('Response status: ' + response.status);
+                log('Response ok: ' + response.ok);
+
+                if (!response.ok) {
+                    throw new Error('HTTP error! status: ' + response.status);
+                }
+
+                const result = await response.json();
+                log('Result: ' + JSON.stringify(result, null, 2));
+
+                if (result.status === 'success') {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ GET Request Berhasil!</h4>
+                            <p>Data ditemukan: ${result.data.length} items</p>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(result.message || 'Unknown error');
+                }
+            } catch (error) {
+                log('❌ ERROR: ' + error.message);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ GET Request Gagal</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testAdd() {
+            if (!API_URL) {
+                alert('Mohon isi API URL terlebih dahulu!');
+                return;
+            }
+
+            const resultDiv = document.getElementById('addResult');
+            resultDiv.innerHTML = '<p>⏳ Menambahkan data test...</p>';
+
+            const testData = {
+                id_barang: 'TEST-' + Date.now(),
+                nama_barang: 'Test Item ' + new Date().toLocaleTimeString(),
+                kategori: 'Elektronik',
+                sub_kategori: 'Test',
+                jumlah: 1,
+                kondisi: 'Baik',
+                status: 'Tersedia',
+                lokasi: 'Gudang'
+            };
+
+            log('=== TEST ADD REQUEST ===');
+            log('Data: ' + JSON.stringify(testData, null, 2));
+
+            try {
+                const params = new URLSearchParams({
+                    action: 'add',
+                    data: JSON.stringify(testData)
+                });
+
+                const url = `${API_URL}?${params.toString()}`;
+                log('Request URL: ' + url);
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
+
+                log('Response status: ' + response.status);
+                log('Response ok: ' + response.ok);
+
+                if (!response.ok) {
+                    throw new Error('HTTP error! status: ' + response.status);
+                }
+
+                const result = await response.json();
+                log('Result: ' + JSON.stringify(result, null, 2));
+
+                if (result.status === 'success') {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ ADD Request Berhasil!</h4>
+                            <p>Data berhasil ditambahkan ke spreadsheet!</p>
+                            <p><strong>ID:</strong> ${testData.id_barang}</p>
+                            <p><strong>Nama:</strong> ${testData.nama_barang}</p>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                            <p style="margin-top: 15px;">
+                                <button onclick="testGet()">🔄 Reload Data</button>
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(result.message || 'Unknown error');
+                }
+            } catch (error) {
+                log('❌ ERROR: ' + error.message);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ ADD Request Gagal</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

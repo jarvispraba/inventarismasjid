@@ -1,0 +1,77 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║          🕌 SISTEM INVENTARIS MASJID                         ║
+║                                                              ║
+║          Website + Google Spreadsheet                        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📁 FILE PENTING:
+
+1. index.html
+   → Halaman utama website
+   → Buka file ini di browser
+
+2. script.js
+   → JavaScript frontend
+   → Isi API_URL dan SPREADSHEET_ID
+
+3. google-apps-script.js
+   → Backend API
+   → Copy ke Google Apps Script
+   → Deploy sebagai Web App
+
+4. test-api.html
+   → Tool untuk test koneksi API
+   → Gunakan jika ada masalah
+
+5. README.md
+   → Dokumentasi lengkap
+   → Panduan setup dan penggunaan
+
+═══════════════════════════════════════════════════════════════
+
+🚀 QUICK START:
+
+1. Setup Google Spreadsheet
+   - Buat sheet "Inventaris"
+   - Header: ID Barang | Nama Barang | Kategori | Sub Kategori | Jumlah | Kondisi | Status | Lokasi
+
+2. Deploy Google Apps Script
+   - Copy kode dari google-apps-script.js
+   - Ganti SPREADSHEET_ID
+   - Deploy sebagai Web App
+   - Copy Web App URL
+
+3. Setup Website
+   - Edit script.js
+   - Ganti API_URL dengan Web App URL
+   - Ganti SPREADSHEET_ID
+   - Buka index.html
+
+═══════════════════════════════════════════════════════════════
+
+✅ FITUR:
+
+✓ Dashboard ringkasan data
+✓ Tambah barang
+✓ Edit barang
+✓ Hapus barang
+✓ Search & filter
+✓ Export CSV
+✓ Link ke spreadsheet
+✓ Mobile friendly
+
+═══════════════════════════════════════════════════════════════
+
+📞 TROUBLESHOOTING:
+
+Jika ada masalah:
+1. Buka test-api.html untuk test koneksi
+2. Buka Console browser (F12) untuk lihat error
+3. Cek README.md untuk panduan lengkap
+
+═══════════════════════════════════════════════════════════════
+
+Versi: 1.0
+Status: Production Ready ✅
